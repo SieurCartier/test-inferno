@@ -1,22 +1,5 @@
 import Component from 'inferno-component';
-import {Link} from 'inferno-router'
-
-function Phone(props) {
-    return (
-        <li className="thumbnail">
-            <Link to={'details/' + props.phone.id}>
-                <a className="thumb">
-                    <img src={'https://github.com/angular/angular-phonecat/raw/master/app/' + props.phone.imageUrl}
-                         alt={props.phone.name}/>
-                </a>
-            </Link>
-            <Link to={'details/' + props.phone.id}>
-                <a>{props.phone.name}</a>
-            </Link>
-            <p>{props.phone.snippet}</p>
-        </li>
-    );
-}
+import Phone from './Phone' ;
 
 class PhoneList extends Component {
     constructor(props) {
@@ -26,8 +9,10 @@ class PhoneList extends Component {
             query: '',
             orderProp: 'age'
         };
+    }
 
-        fetch('https://raw.githubusercontent.com/angular/angular-phonecat/master/app/phones/phones.json')
+    componentDidMount() {
+        fetch('./Phones/phones.json')
             .then(response => response.json())
             .then(json => this.setState({phones: json}));
     }

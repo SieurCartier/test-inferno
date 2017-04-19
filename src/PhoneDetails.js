@@ -1,8 +1,5 @@
 import Component from 'inferno-component';
-
-const Checkmark = ({value}) => {
-    return (value ? '\u2713' : '\u2718');
-};
+import Checkmark from "./Checkmark";
 
 class PhoneDetails extends Component {
     constructor(props) {
@@ -11,20 +8,21 @@ class PhoneDetails extends Component {
             phoneDetails: {},
             mainImageUrl: ''
         };
+    }
 
-        fetch('https://raw.githubusercontent.com/angular/angular-phonecat/master/app/phones/' + this.props.params.phoneId + '.json')
+    componentDidMount() {
+        fetch('../Phones/' + this.props.params.phoneId + '.json')
             .then(response => response.json())
             .then(json => this.setState({
                 phoneDetails: json,
                 mainImageUrl: json.images[0]
             }));
-
     }
 
     render() {
         return (
             <div>
-                <img src={'https://github.com/angular/angular-phonecat/raw/master/app/' + this.state.mainImageUrl}
+                <img src={'../' + this.state.mainImageUrl}
                      className='phone' alt={this.state.phoneDetails.name}/>
                 <h1>{this.state.phoneDetails.name}</h1>
 
@@ -34,7 +32,7 @@ class PhoneDetails extends Component {
                     {this.state.phoneDetails.images &&
                     this.state.phoneDetails.images.map((image, i) =>
                         <li>
-                            <img src={'https://github.com/angular/angular-phonecat/raw/master/app/' + image }
+                            <img src={'../' + image }
                                  alt={image}
                                  onClick={() => this.setState({mainImageUrl: image})}
                             />
